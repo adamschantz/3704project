@@ -10,6 +10,9 @@ controllers/main_controller.py - acts as an interface between user input and
 recommender model, also simulates a user providing interest and displays 
 clubs based on current strategy
 
+data_collection/gobblerconnect_organization_collection.py - python script to
+get club information from gobblerconnect, giving us valuable data for club recommendation
+
 
 HOW IT RELATES TO SYSTEM DESIGN:
 This implementation is guided by our chosen high level architecture(MVC). 
