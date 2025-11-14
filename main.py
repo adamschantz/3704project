@@ -49,7 +49,7 @@ def recommend(payload: RecommendationRequest) -> RecommendationsResponse:
     Core Club Match AI endpoint.
 
     Example request JSON:
-        { "interests": "engineering, robotics, community service, basketball, etc." }
+        { "interests": "engineering, robotics, community service, basketball" }
 
     Example response JSON:
         {
