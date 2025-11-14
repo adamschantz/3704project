@@ -13,6 +13,8 @@ clubs based on current strategy
 data_collection/gobblerconnect_organization_collection.py - python script to
 get club information from gobblerconnect, giving us valuable data for club recommendation
 
+main.py - implemented as a fastapi backend with a /api/v1/recommed endpoint that will
+accept survey answers from students and return club recommendations
 
 HOW IT RELATES TO SYSTEM DESIGN:
 This implementation is guided by our chosen high level architecture(MVC). 
