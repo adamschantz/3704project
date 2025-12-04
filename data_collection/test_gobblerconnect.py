@@ -160,7 +160,7 @@ class TestGobblerConnectScraper(unittest.TestCase):
         mock_fetch_detail.side_effect = detail_side_effect
 
         # call function
-        scrape_all_clubs()
+        scrape_all_clubs("test_output.json")
 
         # assertions
        

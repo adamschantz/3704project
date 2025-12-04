@@ -1,6 +1,7 @@
 import requests
 import json
 import time
+import argparse
 
 BASE_SEARCH_URL = "https://gobblerconnect.vt.edu/api/discovery/search/organizations"
 BASE_DETAIL_URL = "https://gobblerconnect.vt.edu/api/discovery/organization/{}"
@@ -67,7 +68,7 @@ def extract_clean_club_data(detail):
     }
 
 
-def scrape_all_clubs():
+def scrape_all_clubs(output_file):
     print("Starting club scraping...")
 
     # get total count
@@ -113,11 +114,18 @@ def scrape_all_clubs():
         time.sleep(0.1)  # avoiding rate limiting
 
     # saving all clubs in json file
-    with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
+    with open(output_file, "w", encoding="utf-8") as f:
         json.dump(club_data, f, indent=4)
 
-    print(f"Saved {len(club_data)} clubs to {OUTPUT_FILE}")
+    print(f"Saved {len(club_data)} clubs to {output_file}")
 
 
 if __name__ == "__main__":
-    scrape_all_clubs()
+    parser = argparse.ArgumentParser(description="Scrape club data from GobblerConnect.")
+    parser.add_argument(
+        "-o", "--output",
+        default=OUTPUT_FILE,
+        help=f"Output JSON file name (default: {OUTPUT_FILE})"
+    )
+    args = parser.parse_args()
+    scrape_all_clubs(args.output)
