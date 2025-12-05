@@ -14,17 +14,42 @@ class SurveyRecommender(RecommendationStrategy):
         self.clubs = self._load_clubs()
     
     def _load_clubs(self) -> Dict[str, Any]:
-        """Load club data from JSON file."""
+        """
+        Load club data from gobblerconnect_clubs.json.
+
+        Returns:
+            A dictionary representing the club data (typically with a "clubs" key),
+            or an empty dict if the file is missing or invalid.
+        """
+        # Base directory for the project (one level up from /models)
+        base_dir = os.path.dirname(os.path.dirname(__file__))
         data_path = os.path.join(
-            os.path.dirname(os.path.dirname(__file__)),
-            'data_collection',
-            'gobblerconnect_clubs.json'
+            base_dir,
+            "data_collection",
+            "gobblerconnect_clubs.json"
         )
+
+        if not os.path.exists(data_path):
+            print(f"[SurveyRecommender] Club data file not found at {data_path}")
+            return {}
+
         try:
-            with open(data_path, 'r', encoding='utf-8') as f:
-                return json.load(f)
+            with open(data_path, "r", encoding="utf-8") as f:
+                data = json.load(f)
+
+            if not isinstance(data, dict):
+                print("[SurveyRecommender] Unexpected JSON structure in club data (expected dict).")
+                return {}
+
+            if "clubs" not in data:
+                print("[SurveyRecommender] No 'clubs' key found in club data. Using raw data as-is.")
+            return data
+
+        except json.JSONDecodeError:
+            print("[SurveyRecommender] Failed to parse JSON club data (JSONDecodeError).")
+            return {}
         except Exception as e:
-            print(f"Error loading clubs: {e}")
+            print(f"[SurveyRecommender] Error loading clubs: {e}")
             return {}
     
     def _calculate_match_score(self, club: Dict[str, Any], keywords: List[str]) -> int:
