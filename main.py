@@ -1,4 +1,4 @@
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Optional
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -10,9 +10,11 @@ class RecommendationRequest(BaseModel):
 
 
 class ClubRecommendation(BaseModel):
-    name: str | None = None
-    shortName: str | None = None
-    summary: str | None = None
+    name: Optional[str] = None
+    shortName: Optional[str] = None
+    summary: Optional[str] = None
+    score: Optional[int] = None
+
 
 
 class RecommendationsResponse(BaseModel):
