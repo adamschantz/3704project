@@ -7,12 +7,14 @@ from controllers.main_controller import get_recommendations_for_request
 # Pydantic models (request/response schemas)
 class RecommendationRequest(BaseModel):
     interests: str  # e.g., "engineering, robotics, community service, basketball"
+    limit: int = 10  # Number of recommendations to return (default: 10)
 
 
 class ClubRecommendation(BaseModel):
     name: str | None = None
     shortName: str | None = None
     summary: str | None = None
+    score: int | None = None
 
 
 class RecommendationsResponse(BaseModel):
