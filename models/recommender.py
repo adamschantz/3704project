@@ -51,6 +51,9 @@ class SurveyRecommender(RecommendationStrategy):
         # Parse interests into keywords
         keywords = [k.strip().lower() for k in interests.split(',')]
         
+        # Get limit parameter (default to 10)
+        limit = user_data.get('limit', 10)
+        
         # Score each club
         scored_clubs = []
         for club_id, club in self.clubs.items():
@@ -58,16 +61,17 @@ class SurveyRecommender(RecommendationStrategy):
             if score > 0:
                 scored_clubs.append((score, club))
         
-        # Sort by score (highest first) and return top 10
+        # Sort by score (highest first) and return top N
         scored_clubs.sort(reverse=True, key=lambda x: x[0])
         
         return [
             {
                 'name': club.get('name'),
                 'shortName': club.get('shortName'),
-                'summary': club.get('summary')
+                'summary': club.get('summary'),
+                'score': score
             }
-            for _, club in scored_clubs[:10]
+            for score, club in scored_clubs[:limit]
         ]
 
 class RecommenderContext:
